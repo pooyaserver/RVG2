@@ -128,17 +128,17 @@ def generate_uuid(seed: str | None = None) -> str:
     return f"{h[:8]}-{h[8:12]}-{h[12:16]}-{h[16:20]}-{h[20:32]}"
 
 
-def generate_vless_link(uuid: str, host: str, remark: str = "RVG-Netlify") -> str:
-    path = f"/xhttp/{uuid}"
+def generate_vless_link(uuid: str, host: str, remark: str = "RVG-Railway") -> str:
+    path = f"/ws/{uuid}"
     params = {
         "encryption": "none",
         "security": "tls",
-        "type": "xhttp",
+        "type": "ws",
         "host": host,
         "path": path,
         "sni": host,
         "fp": "chrome",
-        "alpn": "h2,http/1.1",
+        "alpn": "http/1.1",
     }
     query = "&".join(f"{k}={quote(str(v))}" for k, v in params.items())
     return f"vless://{uuid}@{host}:443?{query}#{quote(remark)}"
